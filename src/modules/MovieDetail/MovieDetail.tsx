@@ -29,8 +29,8 @@ export default function MovieDetail({ params }: { params: { slug: string } }) {
       queryKey: ['movieDetail', params.slug],
       queryFn: () => getMovieDetail(params.slug)
    })
-   const movieInfo = movieDetail?.data.movie
-   const episodes = movieDetail?.data.episodes[0].server_data
+   const movieInfo = movieDetail?.data?.movie
+   const episodes = movieDetail?.data?.episodes[0]?.server_data
    if (!movieInfo || !episodes) return <Loading />
    return (
       <>

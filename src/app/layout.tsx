@@ -15,6 +15,13 @@ export const metadata: Metadata = {
    title: 'Sonic Việt Nam | Xem chương trình truyền hình trực tuyến, Xem phim trực tuyến',
    description:
       'Xem trực tuyến các bộ phim và chương trình truyền hình của Sonic hoặc phát trực tuyến ngay trên TV thông minh, máy chơi game, máy tính, Mac, di động, máy tính bảng và nhiều thiết bị khác nữa.',
+   alternates: {
+      canonical: '/',
+      languages: {
+         'en-US': '/en-US',
+         'de-DE': '/de-DE'
+      }
+   },
    openGraph: {
       images: '/ogImage.png'
    }

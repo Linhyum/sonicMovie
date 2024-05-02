@@ -27,7 +27,7 @@ export default function MoivePage({ key, type, name }: { key: string; type: stri
          <div className='flex items-center justify-between mb-3'>
             <h1 className='uppercase font-semibold text-base sm:text-xl'>
                Danh sách tất cả{' '}
-               {['phim lẻ', 'phim bộ', 'phim hoạt hình', 'tv shows'].includes(title.toLowerCase()) ? '' : 'phim'}
+               {['phim lẻ', 'phim bộ', 'phim hoạt hình', 'tv shows'].includes(title.toLowerCase()) ? '' : 'phim '}
                {title}
             </h1>
             <span>Trang {currentPage}</span>
