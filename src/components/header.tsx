@@ -37,6 +37,8 @@ export default function Header() {
    const [openGenre, setOpenGenre] = useState<boolean>(false)
    const [openCountry, setOpenCountry] = useState<boolean>(false)
    const [openSearch, setOpenSearch] = useState<boolean>(false)
+   const [openSearch1, setOpenSearch1] = useState<boolean>(false)
+   const [openSearch2, setOpenSearch2] = useState<boolean>(false)
    const [searchValue, setSearchValue] = useState<string>('')
    const [openMenuMobile, setOpenMenuMobile] = useState<boolean>(false)
 
@@ -52,7 +54,8 @@ export default function Header() {
    })
    const { data: searchMovie } = useQuery({
       queryKey: ['searchMovie', searchValue],
-      queryFn: () => getSearchMovies(searchValue)
+      queryFn: () => getSearchMovies(searchValue),
+      enabled: Boolean(searchValue)
    })
    const searchMovieList = searchMovie?.data.data.items
 
@@ -142,11 +145,12 @@ export default function Header() {
                onClickOutside={() => setOpenSearch(false)}
                visible={openSearch}
                content={
-                  <div className='rounded bg-secondary p-3 text-sm flex flex-col gap-y-2 w-full max-w-xs'>
+                  <div className='rounded bg-secondary p-3 text-sm hidden xl:flex flex-col gap-y-2 w-full max-w-xs'>
                      {searchMovieList && searchMovieList?.length > 0 ? (
                         <>
                            {searchMovieList.slice(0, 5)?.map((item) => (
                               <Link
+                                 onClick={() => setOpenSearch(false)}
                                  href={`/phim/${item.slug}`}
                                  className='flex items-center gap-x-2 hover:bg-foreground/10'
                                  key={item._id}
@@ -187,7 +191,7 @@ export default function Header() {
                <form
                   onClick={() => setOpenSearch(true)}
                   onSubmit={(e) => e.preventDefault()}
-                  className='flex items-center border border-secondary pr-3 rounded'
+                  className='hidden xl:flex items-center border border-secondary pr-3 rounded'
                >
                   <Input
                      onChange={(e) => {
@@ -244,14 +248,15 @@ export default function Header() {
             </Link>
             <Tippy
                animation={'perspective-extreme'}
-               onClickOutside={() => setOpenSearch(false)}
-               visible={openSearch}
+               onClickOutside={() => setOpenSearch1(false)}
+               visible={openSearch1}
                content={
-                  <div className='rounded bg-secondary p-3 text-sm flex-col gap-y-2 w-full hidden sm:flex max-w-xs'>
+                  <div className='rounded bg-secondary p-3 text-sm xl:hidden hidden sm:flex flex-col gap-y-2 w-full max-w-xs'>
                      {searchMovieList && searchMovieList?.length > 0 ? (
                         <>
                            {searchMovieList.slice(0, 5)?.map((item) => (
                               <Link
+                                 onClick={() => setOpenSearch1(false)}
                                  href={`/phim/${item.slug}`}
                                  className='flex items-center gap-x-2 hover:bg-foreground/10'
                                  key={item._id}
@@ -267,7 +272,7 @@ export default function Header() {
                            ))}
                            <div className='text-center'>
                               <Link
-                                 onClick={() => setOpenSearch(false)}
+                                 onClick={() => setOpenSearch1(false)}
                                  href={{
                                     pathname: '/tim-kiem',
                                     query: { keyword: searchValue }
@@ -290,16 +295,16 @@ export default function Header() {
                maxWidth={'auto'}
             >
                <form
-                  onClick={() => setOpenSearch(true)}
+                  onClick={() => setOpenSearch1(true)}
                   onSubmit={(e) => e.preventDefault()}
-                  className='items-center border border-secondary pr-3 rounded hidden sm:flex'
+                  className='xl:hidden hidden sm:flex items-center border border-secondary pr-3 rounded'
                >
                   <Input
                      onChange={(e) => {
                         if (e.target.value.trim() !== '') {
                            setTimeout(() => {
                               setSearchValue(e.target.value.trim())
-                              setOpenSearch(true)
+                              setOpenSearch1(true)
                            }, 500)
                         }
                      }}
@@ -365,16 +370,21 @@ export default function Header() {
                   </svg>
                )}
             </button>
+
             <Tippy
                animation={'perspective-extreme'}
-               onClickOutside={() => setOpenSearch(false)}
-               visible={openSearch}
+               onClickOutside={() => setOpenSearch2(false)}
+               visible={openSearch2}
                content={
-                  <div className='rounded bg-secondary p-3 text-sm flex flex-col gap-y-2 w-full max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-4xl'>
+                  <div className='rounded bg-secondary p-3 text-sm flex flex-col gap-y-2 w-full max-w-xs'>
                      {searchMovieList && searchMovieList?.length > 0 ? (
                         <>
                            {searchMovieList.slice(0, 5)?.map((item) => (
                               <Link
+                                 onClick={() => {
+                                    setOpenSearch2(false)
+                                    setOpenMenuMobile(false)
+                                 }}
                                  href={`/phim/${item.slug}`}
                                  className='flex items-center gap-x-2 hover:bg-foreground/10'
                                  key={item._id}
@@ -390,7 +400,10 @@ export default function Header() {
                            ))}
                            <div className='text-center'>
                               <Link
-                                 onClick={() => setOpenSearch(false)}
+                                 onClick={() => {
+                                    setOpenSearch2(false)
+                                    setOpenMenuMobile(false)
+                                 }}
                                  href={{
                                     pathname: '/tim-kiem',
                                     query: { keyword: searchValue }
@@ -413,7 +426,7 @@ export default function Header() {
                maxWidth={'auto'}
             >
                <form
-                  onClick={() => setOpenSearch(true)}
+                  onClick={() => setOpenSearch2(true)}
                   onSubmit={(e) => e.preventDefault()}
                   className='flex items-center border border-secondary pr-3 rounded'
                >
@@ -422,7 +435,7 @@ export default function Header() {
                         if (e.target.value.trim() !== '') {
                            setTimeout(() => {
                               setSearchValue(e.target.value.trim())
-                              setOpenSearch(true)
+                              setOpenSearch2(true)
                            }, 500)
                         }
                      }}
@@ -446,6 +459,7 @@ export default function Header() {
                   </svg>
                </form>
             </Tippy>
+
             {menu.map((item) => (
                <Link
                   href={item.url}

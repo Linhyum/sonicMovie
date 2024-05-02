@@ -17,8 +17,8 @@ export default function SearchMoviePage() {
    if (!searchMovieList) return <Loading />
    return (
       <>
-         <h1 className='text-xl font-semibold mb-3'>{searchMoviePage.data.data.titlePage}</h1>
-         <div className='grid grid-cols-6 gap-4'>
+         <h1 className='text-xl font-semibold mb-3 uppercase'>{searchMoviePage.data.data.titlePage}</h1>
+         <div className='grid gap-3 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 xl:grid-cols-6 sm:gap-4'>
             {searchMovieList.map((item) => (
                <MovieItem item={item} key={item._id} />
             ))}
