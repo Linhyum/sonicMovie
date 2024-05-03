@@ -331,8 +331,8 @@ export default function Header() {
          </div>
 
          <div
-            className={`fixed z-[99999999999999999] overflow-y-auto p-3 sm:p-5 flex flex-col gap-y-5 inset-0 bg-primary-foreground transition-all duration-300 opacity-0 -translate-x-full ${
-               openMenuMobile && 'opacity-100 translate-x-0'
+            className={`fixed z-[99999999999999999] overflow-y-auto p-3 sm:p-5 flex flex-col gap-y-5 inset-0 bg-primary-foreground transition-all duration-300 ${
+               openMenuMobile ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'
             }`}
          >
             <button onClick={() => (theme === 'light' ? setTheme('dark') : setTheme('light'))}>
@@ -462,6 +462,7 @@ export default function Header() {
 
             {menu.map((item) => (
                <Link
+                  onClick={() => setOpenMenuMobile(false)}
                   href={item.url}
                   key={item.title}
                   className={`hover:text-primaryColor inline-block transition-all ${
@@ -480,6 +481,7 @@ export default function Header() {
                   <AccordionContent className='grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4 grid-cols-3 gap-3'>
                      {genres?.data?.map((item) => (
                         <Link
+                           onClick={() => setOpenMenuMobile(false)}
                            className='hover:text-primaryColor outline-none'
                            key={item._id}
                            href={`/the-loai/${item.slug}`}
@@ -496,6 +498,7 @@ export default function Header() {
                   <AccordionContent className='grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4 grid-cols-3 gap-3'>
                      {countries?.data?.map((item) => (
                         <Link
+                           onClick={() => setOpenMenuMobile(false)}
                            className='hover:text-primaryColor outline-none'
                            key={item._id}
                            href={`/quoc-gia/${item.slug}`}
